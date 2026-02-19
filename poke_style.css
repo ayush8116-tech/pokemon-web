@@ -46,8 +46,9 @@
 }
 
 .card {
-  width : 20%;
-  height: 50%;
+  width : 280px;
+  aspect-ratio: 0.6;
+  flex-shrink: 0;
   border: 1.3px solid rgb(208, 208, 208);
   border-radius: 4px;
   background-color: rgb(244, 244, 244);
@@ -89,7 +90,8 @@
 .types {
   display: flex;
   width: 40%;
-  justify-content: space-evenly;
+  justify-content: end;
+  gap: 5px;
 }
 
 .type {
@@ -176,7 +178,7 @@ tbody {
 .sidebar li:hover {
   background-color: rgb(199, 199, 199);
 }
-/* 
+
 #grass:hover  {
     background-color: var(--grass );
   color: white;
@@ -252,4 +254,4 @@ tbody {
   #all:hover {
   background-color: var(--all);
     color: white;
-  } */
+  }
