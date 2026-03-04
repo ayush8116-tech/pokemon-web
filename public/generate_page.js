@@ -1,7 +1,7 @@
 import { generateCard } from "./generate_cards.js";
 import { generateNavigations } from "./generate_navigations.js";
 
-import * as pokemonsData from "/data/pokemon_data.json" with { type: "json" };
+import * as pokemonsData from "./data/pokemon_data.json" with { type: "json" };
 const pokemons = pokemonsData.default;
 
 const generateCardContainer = (pokemons) => {
