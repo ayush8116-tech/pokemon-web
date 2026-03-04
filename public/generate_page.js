@@ -1,30 +1,17 @@
-import { generateCard } from "./generate_cards.js";
-import { generateNavigations } from "./generate_navigations.js";
-
 import * as pokemonsData from "./data/pokemon_data.json" with { type: "json" };
+import { displayAllPokemon } from "./generate_cardfragment.js";
+import { displaySidebar } from "./generate_navigations.js";
 const pokemons = pokemonsData.default;
 
-const generateCardContainer = (pokemons) => {
-  const cardContainer = document.createElement("div");
-  cardContainer.classList = "card-container";
+// const generateSidebar = (pokemons) => {
+//   const sidebar = document.createElement("div");
+//   sidebar.classList = "sidebar";
 
-  pokemons.forEach((pokemon) => {
-    const card = generateCard(pokemon);
-    cardContainer.appendChild(card);
-  });
+//   const navigations = generateNavigations(pokemons);
+//   sidebar.append(...navigations);
 
-  return cardContainer;
-};
-
-const generateSidebar = (pokemons) => {
-  const sidebar = document.createElement("div");
-  sidebar.classList = "sidebar";
-
-  const navigations = generateNavigations(pokemons);
-  sidebar.append(...navigations);
-
-  return sidebar;
-};
+//   return sidebar;
+// };
 
 const generatePage = () => {
   const body = document.querySelector("body");
@@ -32,13 +19,11 @@ const generatePage = () => {
   const main = document.createElement("div");
   main.classList = "body";
 
-  const sidebar = generateSidebar(pokemons);
-  const cardContainer = generateCardContainer(pokemons);
+  const sidebar = displaySidebar(pokemons);
+  const cardContainer = displayAllPokemon(pokemons);
 
   main.append(sidebar, cardContainer);
   body.append(main);
-
-  console.log(body);
 };
 
 window.onload = () => generatePage();

@@ -1,3 +1,5 @@
+import { createFragment } from "./generate_cardfragment.js";
+
 const separatePokemons = (pokemons) => {
   return pokemons.reduce((pokeTypes, pokemon) => {
     pokemon.types.forEach((type) => {
@@ -9,33 +11,21 @@ const separatePokemons = (pokemons) => {
   }, {});
 };
 
-const format = (string) => {
-  return string[0].toUpperCase() + string.slice(1);
-};
+export const displaySidebar = (pokemons) => {
+  const sidebarDom = [
+      "div",
+      {class : "sidebar"},
+      [[
+        "a",
+        {href : "index.html"},
+        [[
+          "li",
+          {id : "all"},
+          "All"
+        ]]
+      ], ...Object.keys(separatePokemons(pokemons)).map(type => ["a", {class : `${type}.html`}, [["li", {class : type}, type]]])]
+    ];
 
-const generateNavigation = (type, href) => {
-  const anchor = document.createElement("a");
-  anchor.href = href;
-
-  const list = document.createElement("li");
-
-  list.id = type;
-  list.innerText = format(type);
-  anchor.appendChild(list);
-
-  return anchor;
-};
-
-export const generateNavigations = (pokemons) => {
-  const pokeTypes = separatePokemons(pokemons);
-  console.log(pokeTypes);
-  
-  const allLink = generateNavigation("all", "index.html");
-
-  const navigations = Object.keys(pokeTypes).map((type) => {
-    const href = `${type}.html`;
-    return generateNavigation(type, href);
-  });
-
-  return [allLink, ...navigations];
-};
+  const sidebar = createFragment(sidebarDom);
+  return sidebar;
+}

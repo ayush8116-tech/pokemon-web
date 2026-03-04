@@ -1,4 +1,4 @@
-import * as pokemonsData from "./pokemon_data.json" with { type: "json" };
+import * as pokemonsData from "../public/data/pokemon_data.json" with { type: "json" };
 const pokemons = pokemonsData.default;
 
 const pageTemplate = (cards, navigations, style) =>

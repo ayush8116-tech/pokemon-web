@@ -20,35 +20,40 @@ const TYPECOLOR = {
   all: "dimgray",
 };
 
-const createImage = (pokemon) => {
-  const image = document.createElement("img");
-  image.src = `${pokemon.imgUrl}`;
-  image.alt = `${pokemon.name}`;
+const createHTMLElement = ([tag, attributes, textNode]) => {
+  const element = document.createElement(tag);
+    attributes.forEach(([name, val]) => {
+      element.setAttribute(name, val)
+    });
 
+  element.innerText = textNode || "";
+
+  return element;
+}
+
+const createImage = (pokemon) => {
+  const dom = ["img", [["src", pokemon.imgUrl], ["alt", pokemon.name]]]
+  const image = createHTMLElement(dom);
+  
   return image;
 };
 
 const createImageContainer = (pokemon) => {
-  const imageContainer = document.createElement("div");
-
-  imageContainer.className = "image-container";
+  const containerDom = ["div", [["class", "image-container"]]]
+  const imageContainer = createHTMLElement(containerDom);
 
   const image = createImage(pokemon);
-
   imageContainer.appendChild(image);
 
   return imageContainer;
 };
 
 const generateType = (type, index) => {
-  const typeDiv = document.createElement("div");
+  const typeDivDom = ["div", [["class", `type type-${index + 1}`],["style", `background-color : ${TYPECOLOR[type]}`]]];
+  const typeDiv = createHTMLElement(typeDivDom);
 
-  typeDiv.classList.add("type", `type-${index + 1}`);
-  typeDiv.style.backgroundColor = TYPECOLOR[type];
-
-  const typeName = document.createElement("p");
-  typeName.innerText = type;
-
+  const typeNameDom = ["p", [["id", "para"]], type];
+  const typeName = createHTMLElement(typeNameDom);
   typeDiv.appendChild(typeName);
 
   return typeDiv;
@@ -59,12 +64,11 @@ const createTypes = (types) => {
 };
 
 const createNameHeading = (pokemon) => {
-  const nameHeading = document.createElement("div");
-  nameHeading.classList = "poke-name-type";
+  const nameHeadingDom = ["div", [["class", "poke-name-type"]]]
+  const nameHeading = createHTMLElement(nameHeadingDom);
 
-  const name = document.createElement("div");
-  name.classList = "name";
-  name.innerText = pokemon.name;
+  const nameDom = ["div", [["class", "name"]], pokemon.name]
+  const name = createHTMLElement(nameDom);
 
   const types = document.createElement("div");
   types.classList = "types";
