@@ -1,0 +1,235 @@
+[
+  {
+    "name": "bulbasaur",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "xp": 64,
+    "weight": 69,
+    "hp": 45,
+    "attack": 49,
+    "defense": 49,
+    "special-attack": 65,
+    "special-defense": 65,
+    "speed": 45,
+    "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+  },
+  {
+    "name": "ivysaur",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "xp": 142,
+    "weight": 130,
+    "hp": 60,
+    "attack": 62,
+    "defense": 63,
+    "special-attack": 80,
+    "special-defense": 80,
+    "speed": 60,
+    "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png"
+  },
+  {
+    "name": "venusaur",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "xp": 236,
+    "weight": 1000,
+    "hp": 80,
+    "attack": 82,
+    "defense": 83,
+    "special-attack": 100,
+    "special-defense": 100,
+    "speed": 80,
+    "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png"
+  },
+  {
+    "name": "charmander",
+    "types": [
+      "fire"
+    ],
+    "xp": 62,
+    "weight": 85,
+    "hp": 39,
+    "attack": 52,
+    "defense": 43,
+    "special-attack": 60,
+    "special-defense": 50,
+    "speed": 65,
+    "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png"
+  },
+  {
+    "name": "charmeleon",
+    "types": [
+      "fire"
+    ],
+    "xp": 142,
+    "weight": 190,
+    "hp": 58,
+    "attack": 64,
+    "defense": 58,
+    "special-attack": 80,
+    "special-defense": 65,
+    "speed": 80,
+    "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png"
+  },
+  {
+    "name": "charizard",
+    "types": [
+      "fire",
+      "flying"
+    ],
+    "xp": 240,
+    "weight": 905,
+    "hp": 78,
+    "attack": 84,
+    "defense": 78,
+    "special-attack": 109,
+    "special-defense": 85,
+    "speed": 100,
+    "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"
+  },
+  {
+    "name": "squirtle",
+    "types": [
+      "water"
+    ],
+    "xp": 63,
+    "weight": 90,
+    "hp": 44,
+    "attack": 48,
+    "defense": 65,
+    "special-attack": 50,
+    "special-defense": 64,
+    "speed": 43,
+    "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png"
+  },
+  {
+    "name": "wartortle",
+    "types": [
+      "water"
+    ],
+    "xp": 142,
+    "weight": 225,
+    "hp": 59,
+    "attack": 63,
+    "defense": 80,
+    "special-attack": 65,
+    "special-defense": 80,
+    "speed": 58,
+    "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/8.png"
+  },
+  {
+    "name": "blastoise",
+    "types": [
+      "water"
+    ],
+    "xp": 239,
+    "weight": 855,
+    "hp": 79,
+    "attack": 83,
+    "defense": 100,
+    "special-attack": 85,
+    "special-defense": 105,
+    "speed": 78,
+    "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png"
+  },
+  {
+    "name": "caterpie",
+    "types": [
+      "bug"
+    ],
+    "xp": 39,
+    "weight": 29,
+    "hp": 45,
+    "attack": 30,
+    "defense": 35,
+    "special-attack": 20,
+    "special-defense": 20,
+    "speed": 45,
+    "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10.png"
+  },
+  {
+    "name": "metapod",
+    "types": [
+      "bug"
+    ],
+    "xp": 72,
+    "weight": 99,
+    "hp": 50,
+    "attack": 20,
+    "defense": 55,
+    "special-attack": 25,
+    "special-defense": 25,
+    "speed": 30,
+    "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/11.png"
+  },
+  {
+    "name": "butterfree",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "xp": 178,
+    "weight": 320,
+    "hp": 60,
+    "attack": 45,
+    "defense": 50,
+    "special-attack": 90,
+    "special-defense": 80,
+    "speed": 70,
+    "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/12.png"
+  },
+  {
+    "name": "weedle",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "xp": 39,
+    "weight": 32,
+    "hp": 40,
+    "attack": 35,
+    "defense": 30,
+    "special-attack": 20,
+    "special-defense": 20,
+    "speed": 50,
+    "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/13.png"
+  },
+  {
+    "name": "kakuna",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "xp": 72,
+    "weight": 100,
+    "hp": 45,
+    "attack": 25,
+    "defense": 50,
+    "special-attack": 25,
+    "special-defense": 25,
+    "speed": 35,
+    "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/14.png"
+  },
+  {
+    "name": "beedrill",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "xp": 178,
+    "weight": 295,
+    "hp": 65,
+    "attack": 90,
+    "defense": 40,
+    "special-attack": 45,
+    "special-defense": 80,
+    "speed": 75,
+    "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/15.png"
+  }
+]
