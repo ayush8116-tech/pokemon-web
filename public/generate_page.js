@@ -32,8 +32,8 @@ export const generatePage = (pokemons) => {
   return body;
 };
 
-generatePage(pokemons)
 
 window.onload = () => {
+  generatePage(pokemons)
   navigate(pokemons, filteredPokemon);
 }

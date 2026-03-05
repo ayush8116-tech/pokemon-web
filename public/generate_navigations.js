@@ -1,9 +1,9 @@
-import { createFragment } from "./generate_cardfragment.js";
+import { createFragment, format } from "./generate_cardfragment.js";
 
 export const displaySidebar = (pokemons) => {
   const sidebarDom = [
     "form",
-    { class: "sidebar", action: "/navigation",method:"get" },
+    { class: "sidebar", action: "/navigation" },
     [
       [
         "button",
@@ -11,7 +11,7 @@ export const displaySidebar = (pokemons) => {
         "All",
       ],
       ...Object.keys(pokemons).map(
-        (type) => ["button", { name: "type", value: type, id: type, type : "submit" }, type]
+        (type) => ["button", { name: "type", value: type, id: type, type : "submit" }, format(type)]
       ),
     ],
   ];

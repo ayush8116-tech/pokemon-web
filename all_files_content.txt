@@ -1,0 +1,490 @@
+File: public/index.html
+<html>
+
+<head>
+  <title>Pokedex</title>
+  <link rel="stylesheet" href="poke_style.css">
+  <style>
+    #all {
+      background-color: dimgray;
+      color: white;
+    }
+  </style>
+
+  <script type="module" src="/generate_page.js"></script>
+  <script type="module" src="/generate_cardfragment.js"></script>
+  <script type="module" src="/generate_navigations.js"></script>
+  <script type="module" src="/navigate.js"></script>
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+File: public/generate_cardfragment.js
+const TYPECOLOR = {
+  grass: "mediumseagreen",
+  poison: "mediumpurple",
+  fire: "goldenrod",
+  flying: "steelblue",
+  water: "dodgerblue",
+  bug: "brown",
+  normal: "gray",
+  ground: "peru",
+  fairy: "hotpink",
+  fighting: "crimson",
+  electric: "hsl(51deg 73% 50%)",
+  psychic: "orange",
+  rock: "dimgray",
+  ice: "darkcyan",
+  dragon: "mediumaquamarine",
+  ghost: "black",
+  dark: "slategray",
+  steel: "steelblue",
+  all: "dimgray",
+};
+
+export const createFragment = ([tag, attributes, content]) => {
+  const element = document.createElement(tag);
+
+  for (const key in attributes) {
+    element.setAttribute(key, attributes[key]);
+  }
+
+  if (typeof content === "string" || typeof content === "number") {
+    element.innerText = content;
+    return element;
+  }
+
+  const children = content.map(createFragment);
+  element.append(...children);
+
+  return element;
+};
+
+export const format = (data) => data[0].toUpperCase() + data.slice(1);
+
+const displayPokemon = (pokemon) => {
+  const statsData = {
+    "Base XP": pokemon.xp,
+    "Weight": pokemon.weight,
+    "HP": pokemon.hp,
+    "Attack": pokemon.attack,
+    "Defense": pokemon.defense,
+    "Speed": pokemon.speed,
+  };
+
+  const cardDom = ["div", { class: "card" }, [["div", {
+    class: "image-container",
+  }, [["img", { src: pokemon.imgUrl, alt: pokemon.name }, ""]]], ["div", {
+    class: "detail-container",
+  }, [["div", { class: "poke-name-type" }, [[
+    "div",
+    { class: "name" },
+    format(pokemon.name),
+  ], [
+    "div",
+    { class: "types" },
+    pokemon.types.map((
+      type,
+      index,
+    ) => ["div", {
+      class: `type type-${index + 1}`,
+      style: `background-color : ${TYPECOLOR[type]}`,
+    }, [["p", { id: pokemon.name }, type]]]),
+  ]]], ["div", { class: "stats-table-container" }, [["table", {
+    class: "stats",
+  }, [[
+    "tbody",
+    { id: "table-body" },
+    Object.entries(statsData).map((
+      [key, val],
+    ) => ["tr", { class: "row" }, [["td", { class: "stat-name" }, key], ["td", {
+      class: "stat-entry",
+    }, val]]]),
+  ]]]]]]]]];
+
+  const card = createFragment(cardDom);
+
+  return card;
+};
+
+export const displayAllPokemon = (pokemon) => {
+  const cardContainer = createFragment(["div", {class:"card-container"}, ""]);
+
+  pokemon.forEach((singlePokemon) => {
+    cardContainer.appendChild(displayPokemon(singlePokemon));
+  });
+
+  return cardContainer;
+};
+
+
+File: public/generate_navigations.js
+import { createFragment, format } from "./generate_cardfragment.js";
+
+export const displaySidebar = (pokemons) => {
+  const sidebarDom = [
+    "form",
+    { class: "sidebar", action: "/navigation" },
+    [
+      [
+        "button",
+        { name: "type", value: "all", id: "all", type : "submit" },
+        "All",
+      ],
+      ...Object.keys(pokemons).map(
+        (type) => ["button", { name: "type", value: type, id: type, type : "submit" }, format(type)]
+      ),
+    ],
+  ];
+
+  const sidebar = createFragment(sidebarDom);
+
+  return sidebar;
+};
+
+File: public/generate_page.js
+import * as pokemonsData from "./data/pokemon_data.json" with { type: "json" };
+import { displayAllPokemon } from "./generate_cardfragment.js";
+import { displaySidebar } from "./generate_navigations.js";
+import { navigate } from "./navigate.js";
+const pokemons = pokemonsData.default;
+
+const separatePokemons = (pokemons) => {
+  return pokemons.reduce((pokeTypes, pokemon) => {
+    pokemon.types.forEach((type) => {
+      pokeTypes[type] ||= [];
+      pokeTypes[type].push(pokemon);
+    });
+
+    return pokeTypes;
+  }, {});
+};
+
+const filteredPokemon = separatePokemons(pokemons);
+
+export const generatePage = (pokemons) => {
+  const body = document.querySelector("body");
+
+  const main = document.createElement("div");
+  main.classList = "body";
+
+  const sidebar = displaySidebar(filteredPokemon);
+  const cardContainer = displayAllPokemon(pokemons);
+
+  main.append(sidebar, cardContainer);
+  body.append(main);
+
+  return body;
+};
+
+
+window.onload = () => {
+  generatePage(pokemons)
+  navigate(pokemons, filteredPokemon);
+}
+
+File: public/navigate.js
+import { displayAllPokemon } from "./generate_cardfragment.js";
+
+export const navigate = (pokemon, filteredPokemon) => {
+  const form = document.querySelector("form");
+  
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    
+    const main = document.querySelector(".body");
+    const cardContainer = document.querySelector(".card-container");
+
+    const fd = new FormData(event.target, event.submitter);
+    const { type } = Object.fromEntries(fd.entries());
+    
+    main.removeChild(cardContainer);
+    const newCardContainer = displayAllPokemon(filteredPokemon[type] || pokemon);
+
+    main.append(newCardContainer);
+  })
+};
+
+File: public/poke_style.css
+:root {
+  --grass: mediumseagreen;
+  --poison: mediumpurple;
+  --fire: goldenrod;
+  --flying: steelblue;
+  --water: dodgerblue;
+  --bug: brown;
+  --normal: gray;
+  --ground: peru;
+  --fairy: hotpink;
+  --fighting: crimson;
+  --electric: hsl(51deg 73% 50%);
+  --psychic: orange;
+  --rock: dimgray;
+  --ice: darkcyan;
+  --dragon: mediumaquamarine;
+  --ghost: black;
+  --dark: slategray;
+  --steel: steelblue;
+  --all: dimgray;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.body {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+.card-container {
+  height: 100%;
+  width: 80%;
+  /* display: flex; */
+  /* flex-direction: row; */
+  display: grid;
+  grid-template-columns: repeat(4, 240px);
+  gap: 50px;
+  overflow: hidden;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  justify-content: center;
+  margin: 40px auto;
+}
+
+.card {
+  width: 240px;
+  aspect-ratio: 0.6;
+  flex-shrink: 0;
+  border: 1.3px solid rgb(208, 208, 208);
+  border-radius: 4px;
+  background-color: rgb(244, 244, 244);
+  display: flex;
+  flex-direction: column;
+}
+
+.image-container {
+  background-color: rgb(220, 220, 220);
+  height: 50%;
+  margin: 7px;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.detail-container {
+  margin: 0px 6px 6px 6px;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.poke-name-type {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+
+.name {
+  font-size: 22px;
+  font-weight: 600;
+  color: rgb(103, 103, 103);
+}
+
+.types {
+  display: flex;
+  width: 40%;
+  justify-content: end;
+  gap: 5px;
+}
+
+.type {
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 2px;
+  padding: 5px;
+  color: white;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.type-1 {
+  background-color: var(--poison);
+}
+
+.type-2 {
+  background-color: var(--grass);
+}
+
+.stats-table-container {
+  width: 100%;
+  height: 100%;
+}
+
+.stats {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+}
+
+tbody {
+  width: 100%;
+  height: 100%;
+}
+
+.stats tr {
+  width: 100%;
+  border-bottom: 1px solid rgb(186, 186, 186);
+  padding: 0.1em 0;
+}
+
+.stats tr td {
+  color: rgb(103, 103, 103);
+}
+
+.stat-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.stat-entry {
+  font-weight: 400;
+  text-align: end;
+}
+
+#table-body tr:nth-child(6) {
+  border: 0;
+}
+
+.sidebar {
+  padding-top: 10px;
+  width: 17%;
+  height: 100%;
+  background-color: rgb(242, 242, 242);
+  display: flex;
+  flex-flow: column;
+  overflow-y: scroll;
+}
+
+.sidebar button {
+  text-decoration: none;
+  color: black;
+}
+
+.sidebar button {
+  padding: 15px 0;
+  text-align: center;
+  font-size: 20px;
+  border-style: none;  
+  cursor: pointer;
+}
+
+.sidebar button:hover {
+  background-color: rgb(199, 199, 199);
+}
+
+#grass:hover {
+  background-color: var(--grass);
+  color: white;
+}
+
+#poison:hover {
+  background-color: var(--poison);
+  color: white;
+}
+
+#fire:hover {
+  background-color: var(--fire);
+  color: white;
+}
+
+#flying:hover {
+  background-color: var(--flying);
+  color: white;
+}
+
+#water:hover {
+  background-color: var(--water);
+  color: white;
+}
+
+#bug:hover {
+  background-color: var(--bug);
+  color: white;
+}
+
+#normal:hover {
+  background-color: var(--normal);
+  color: white;
+}
+
+#ground:hover {
+  background-color: var(--ground);
+  color: white;
+}
+
+#fairy:hover {
+  background-color: var(--fairy);
+  color: white;
+}
+
+#fighting:hover {
+  background-color: var(--fighting);
+  color: white;
+}
+
+#electric:hover {
+  background-color: var(--electric);
+  color: white;
+}
+
+#psychic:hover {
+  background-color: var(--psychic);
+  color: white;
+}
+
+#rock:hover {
+  background-color: var(--rock);
+  color: white;
+}
+
+#ice:hover {
+  background-color: var(--ice);
+  color: white;
+}
+
+#dragon:hover {
+  background-color: var(--dragon);
+  color: white;
+}
+
+#ghost:hover {
+  background-color: var(--ghost);
+  color: white;
+}
+
+#dark:hover {
+  background-color: var(--dark);
+  color: white;
+}
+
+#steel:hover {
+  background-color: var(--steel);
+  color: white;
+}
+
+#all:hover {
+  background-color: var(--all);
+  color: white;
+}
