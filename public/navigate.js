@@ -1,4 +1,4 @@
-import { displayAllPokemon } from "./generate_cardfragment.js";
+import { displayAllPokemon } from "./render.js";
 
 export const navigate = (pokemon, filteredPokemon) => {
   const form = document.querySelector("form");
@@ -8,12 +8,12 @@ export const navigate = (pokemon, filteredPokemon) => {
     
     const main = document.querySelector(".body");
     const cardContainer = document.querySelector(".card-container");
-
+    
     const fd = new FormData(event.target, event.submitter);
     const { type } = Object.fromEntries(fd.entries());
     
     main.removeChild(cardContainer);
-    const newCardContainer = displayAllPokemon(filteredPokemon[type] || pokemon);
+    const newCardContainer = displayAllPokemon(filteredPokemon[type] || pokemon, type);
 
     main.append(newCardContainer);
   })

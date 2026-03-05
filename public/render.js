@@ -1,3 +1,5 @@
+import { createFragment, format } from "./generate_fragment.js";
+
 const TYPECOLOR = {
   grass: "mediumseagreen",
   poison: "mediumpurple",
@@ -20,27 +22,7 @@ const TYPECOLOR = {
   all: "dimgray",
 };
 
-export const createFragment = ([tag, attributes, content]) => {
-  const element = document.createElement(tag);
-
-  for (const key in attributes) {
-    element.setAttribute(key, attributes[key]);
-  }
-
-  if (typeof content === "string" || typeof content === "number") {
-    element.innerText = content;
-    return element;
-  }
-
-  const children = content.map(createFragment);
-  element.append(...children);
-
-  return element;
-};
-
-export const format = (data) => data[0].toUpperCase() + data.slice(1);
-
-const displayPokemon = (pokemon) => {
+const displayPokemon = (pokemon, type) => {
   const statsData = {
     "Base XP": pokemon.xp,
     "Weight": pokemon.weight,
@@ -50,11 +32,12 @@ const displayPokemon = (pokemon) => {
     "Speed": pokemon.speed,
   };
 
-  const cardDom = ["div", 
+  const cardDom = 
+  ["div", 
     { class: "card" },
     [
       ["div",
-         { class: "image-container" },
+         { class: "image-container", style:`background-image: linear-gradient(${type === "all" ? TYPECOLOR[pokemon.types[0]] : TYPECOLOR[type]}, white);` },
         [
           [
             "img", 
@@ -74,7 +57,8 @@ const displayPokemon = (pokemon) => {
                   "div",
                   { class: "name" },
                   format(pokemon.name),
-                ], [
+                ], 
+                [
                     "div",
                     { class: "types" },
                     pokemon.types.map(( type, index ) => [
@@ -121,6 +105,7 @@ const displayPokemon = (pokemon) => {
                                   ]
                                 ]
                               ]),
+                            ]
                           ]
                         ]
                       ]
@@ -128,21 +113,20 @@ const displayPokemon = (pokemon) => {
                   ]
                 ]
               ]
-            ]
-          ];
+            ];
 
   const card = createFragment(cardDom);
 
   return card;
 };
 
-export const displayAllPokemon = (pokemon) => {
+export const displayAllPokemon = (pokemon, type = "all") => {
   const cardContainer = createFragment(["div", {class:"card-container"}, ""]);
-
+  
   pokemon.forEach((singlePokemon) => {
-    cardContainer.appendChild(displayPokemon(singlePokemon));
+
+    cardContainer.appendChild(displayPokemon(singlePokemon,type));
   });
 
   return cardContainer;
 };
-

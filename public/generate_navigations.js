@@ -1,4 +1,4 @@
-import { createFragment, format } from "./generate_cardfragment.js";
+import { createFragment, format } from "./generate_fragment.js";
 
 export const displaySidebar = (pokemons) => {
   const sidebarDom = [

@@ -1,5 +1,5 @@
 import * as pokemonsData from "./data/pokemon_data.json" with { type: "json" };
-import { displayAllPokemon } from "./generate_cardfragment.js";
+import { displayAllPokemon } from "./render.js";
 import { displaySidebar } from "./generate_navigations.js";
 import { navigate } from "./navigate.js";
 const pokemons = pokemonsData.default;
@@ -34,6 +34,6 @@ export const generatePage = (pokemons) => {
 
 
 window.onload = () => {
-  generatePage(pokemons)
+  generatePage(pokemons, "all")
   navigate(pokemons, filteredPokemon);
 }
