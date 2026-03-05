@@ -31,7 +31,6 @@ export const createFragment = ([tag, attributes, content]) => {
     element.innerText = content;
     return element;
   }
-  console.log(content);
 
   const children = content.map(createFragment);
   element.append(...children);
@@ -80,14 +79,13 @@ const displayPokemon = (pokemon) => {
   ]]]]]]]]];
 
   const card = createFragment(cardDom);
-  console.log(card);
 
   return card;
 };
 
 export const displayAllPokemon = (pokemon) => {
   const cardContainer = createFragment(["div", {class:"card-container"}, ""]);
-
+  
   pokemon.forEach((singlePokemon) => {
     cardContainer.appendChild(displayPokemon(singlePokemon));
   });

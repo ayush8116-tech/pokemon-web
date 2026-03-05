@@ -1,4 +1,4 @@
-import * as pokedata from "./pokemon_data.json" with { type: "json" };
+import * as pokedata from "../public/data/pokemon_data.json" with { type: "json" };
 const pokemons = pokedata.default;
 
 const extractTypes = (pokemonTypes) =>
@@ -32,7 +32,7 @@ const processPokemonData = async (pokemons) => {
   }
 
   const stats = extractPokemonStats(pokemonDetails);
-  Deno.writeTextFileSync("./src/pokemon_data.json", JSON.stringify(stats));
+  Deno.writeTextFileSync("./public/data/pokemon_data.json", JSON.stringify(stats));
 
   return stats;
 };

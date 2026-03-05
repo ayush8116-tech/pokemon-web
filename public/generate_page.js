@@ -1,29 +1,39 @@
 import * as pokemonsData from "./data/pokemon_data.json" with { type: "json" };
 import { displayAllPokemon } from "./generate_cardfragment.js";
 import { displaySidebar } from "./generate_navigations.js";
+import { navigate } from "./navigate.js";
 const pokemons = pokemonsData.default;
 
-// const generateSidebar = (pokemons) => {
-//   const sidebar = document.createElement("div");
-//   sidebar.classList = "sidebar";
+const separatePokemons = (pokemons) => {
+  return pokemons.reduce((pokeTypes, pokemon) => {
+    pokemon.types.forEach((type) => {
+      pokeTypes[type] ||= [];
+      pokeTypes[type].push(pokemon);
+    });
 
-//   const navigations = generateNavigations(pokemons);
-//   sidebar.append(...navigations);
+    return pokeTypes;
+  }, {});
+};
 
-//   return sidebar;
-// };
+const filteredPokemon = separatePokemons(pokemons);
 
-const generatePage = () => {
+export const generatePage = (pokemons) => {
   const body = document.querySelector("body");
 
   const main = document.createElement("div");
   main.classList = "body";
 
-  const sidebar = displaySidebar(pokemons);
+  const sidebar = displaySidebar(filteredPokemon);
   const cardContainer = displayAllPokemon(pokemons);
 
   main.append(sidebar, cardContainer);
   body.append(main);
+
+  return body;
 };
 
-window.onload = () => generatePage();
+generatePage(pokemons)
+
+window.onload = () => {
+  navigate(pokemons, filteredPokemon);
+}

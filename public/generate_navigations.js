@@ -1,31 +1,22 @@
 import { createFragment } from "./generate_cardfragment.js";
 
-const separatePokemons = (pokemons) => {
-  return pokemons.reduce((pokeTypes, pokemon) => {
-    pokemon.types.forEach((type) => {
-      pokeTypes[type] ||= [];
-      pokeTypes[type].push(pokemon);
-    });
-
-    return pokeTypes;
-  }, {});
-};
-
 export const displaySidebar = (pokemons) => {
   const sidebarDom = [
-      "div",
-      {class : "sidebar"},
-      [[
-        "a",
-        {href : "index.html"},
-        [[
-          "li",
-          {id : "all"},
-          "All"
-        ]]
-      ], ...Object.keys(separatePokemons(pokemons)).map(type => ["a", {class : `${type}.html`}, [["li", {class : type}, type]]])]
-    ];
+    "form",
+    { class: "sidebar", action: "/navigation",method:"get" },
+    [
+      [
+        "button",
+        { name: "type", value: "all", id: "all", type : "submit" },
+        "All",
+      ],
+      ...Object.keys(pokemons).map(
+        (type) => ["button", { name: "type", value: type, id: type, type : "submit" }, type]
+      ),
+    ],
+  ];
 
   const sidebar = createFragment(sidebarDom);
+
   return sidebar;
-}
+};
